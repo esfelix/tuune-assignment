@@ -7,7 +7,7 @@ Behold My Awesome Project!
 
 ![image](https://img.shields.io/badge/code%20style-black-000000.svg%0A%20%20:target:%20https://github.com/ambv/black%0A%20%20:alt:%20Black%20code%20style)
 
-License  
+License
 MIT
 
 Settings
