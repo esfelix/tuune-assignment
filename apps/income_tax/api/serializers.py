@@ -7,9 +7,9 @@ from apps.income_tax.models import TaxBand
 
 
 class TaxBandSerializer(serializers.ModelSerializer):
-    amount_due = serializers.SerializerMethodField()
+    tax_due = serializers.SerializerMethodField()
 
-    def get_amount_due(self, obj: TaxBand) -> decimal.Decimal:
+    def get_tax_due(self, obj: TaxBand) -> decimal.Decimal:
         """
         Returns the amount of tax due for the given band.
         From the income and the (inclusive) band range
@@ -23,5 +23,11 @@ class TaxBandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaxBand
-        fields = ["name", "min", "max", "percent_taxed", "amount_due"]
-        read_only_fields = ["name", "min", "max", "percent_taxed", "amount_due"]
+        fields = ["name", "min", "max", "percent_taxed", "tax_due"]
+        read_only_fields = ["name", "min", "max", "percent_taxed", "tax_due"]
+
+
+class IncomeTaxSerializer(serializers.Serializer):
+    income = serializers.IntegerField()
+    show_breakdown = serializers.BooleanField(default=False, required=False)
+    tax_due = serializers.DecimalField(max_digits=19, decimal_places=2, read_only=True)
