@@ -1,0 +1,187 @@
+openapi: 3.1.0
+info:
+  title: tuune-assignment-api
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /api/v1/income-tax/calculate:
+    post:
+      summary: Calculate income tax
+      operationId: post-api-v1-income-tax-calculate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncomeTax'
+              examples:
+                Income tax without breakdown.:
+                  value:
+                    tax_due: '8300.00'
+                Income tax with breakdown.:
+                  value:
+                    tax_due: '8300.00'
+                    breakdown:
+                      - name: band_1
+                        min: null
+                        max: 12500
+                        percent_taxed: 0
+                        tax_due: '0.00'
+                      - name: band_2
+                        min: 12501
+                        max: 50000
+                        percent_taxed: 20
+                        tax_due: '7500.00'
+                      - name: band_3
+                        min: 50001
+                        max: 150000
+                        percent_taxed: 40
+                        tax_due: '700.00'
+                      - name: band_4
+                        min: 150001
+                        max: null
+                        percent_taxed: 45
+                        tax_due: '0.00'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '405':
+          description: Method Not Allowed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                income:
+                  type: integer
+                  example: 52000
+                  description: The total annual income (in GBP) to calculate income tax for.
+                show_breakdown:
+                  type: boolean
+                  default: false
+                  description: Optional flag to indicate whether to return a full breakdown of the tax paid in each band.
+              required:
+                - income
+            examples:
+              Calculate without breakdown.:
+                value:
+                  income: 52000
+              Calculate with breakdown:
+                value:
+                  income: 52000
+                  show_breakdown: true
+        description: ''
+      description: |-
+        Calculates the income tax for a given `income`.
+
+        By default no tax band breakdown is included, set `show_breakdown = true` to do so.
+components:
+  schemas:
+    IncomeTax:
+      title: IncomeTax
+      type: object
+      description: 'Object representing an income tax calculation. Optional breakdown is controlled by the `show_breakdown` parameter. '
+      x-examples:
+        Income tax without breakdown:
+          tax_due: '8300.00'
+        Income tax with breakdown:
+          tax_due: '8300.00'
+          breakdown:
+            - name: band_1
+              min: null
+              max: 12500
+              percent_taxed: 0
+              tax_due: '0.00'
+            - name: band_2
+              min: 12501
+              max: 50000
+              percent_taxed: 20
+              tax_due: '7500.00'
+            - name: band_3
+              min: 50001
+              max: 150000
+              percent_taxed: 40
+              tax_due: '700.00'
+            - name: band_4
+              min: 150001
+              max: null
+              percent_taxed: 45
+              tax_due: '0.00'
+      properties:
+        tax_due:
+          type: string
+          example: '8300.00'
+          description: 'The total amount of income tax payable based on the a given annual income. '
+        breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncomeTaxBreakdown'
+      required:
+        - tax_due
+    IncomeTaxBreakdown:
+      title: BandBreakdown
+      type: object
+      description: |-
+        Object representing a breakdown of a given income tax band.
+
+        There are 4 different bands within which a different % is contributed to the total income tax:
+        * ***Band 1***: earnings up to £12,500 (0% payable)
+        * ***Band 2***: earnings between £12,501 and £50,000 (20% payable)
+        * ***Band 3***: earnings between £50,001 and £150,000 (40% payable)
+        * ***Band 4***: earnings of £150,001 and over (45% payable)
+      x-examples:
+        Band 1 breakdown:
+          name: band_2
+          min: 12501
+          max: 50000
+          percent_taxed: 20
+          tax_due: '0.00'
+        Band 2 breakdown:
+          name: band_2
+          min: 12501
+          max: 50000
+          percent_taxed: 20
+          tax_due: '7500.00'
+        Band 3 breakdown:
+          name: band_3
+          min: 50001
+          max: 150000
+          percent_taxed: 40
+          tax_due: '700.00'
+        Band 4 breakdown:
+          name: band_4
+          min: 150001
+          max: null
+          percent_taxed: 45
+          tax_due: '0.00'
+      properties:
+        name:
+          type: string
+          example: band_2
+          description: Unique name to identify the tax band.
+        min:
+          type:
+            - integer
+            - 'null'
+          example: 12501
+          description: The smallest amount within the tax band.
+        max:
+          type:
+            - integer
+            - 'null'
+          description: The highest amount within the tax band.
+        percent_taxed:
+          type: integer
+          example: 20
+          description: The percentage of the amount within the tax band to be paid as tax.
+        tax_due:
+          type: string
+          example: '7500.00'
+          description: The amount due as a result of earning within this tax band.
