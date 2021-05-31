@@ -30,4 +30,3 @@ class TaxBandSerializer(serializers.ModelSerializer):
 class IncomeTaxSerializer(serializers.Serializer):
     income = serializers.IntegerField()
     show_breakdown = serializers.BooleanField(default=False, required=False)
-    tax_due = serializers.DecimalField(max_digits=19, decimal_places=2, read_only=True)
