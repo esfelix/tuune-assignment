@@ -39,7 +39,7 @@ echo '{"income":52000,"show_breakdown":false}' |  \
 #### Running tests with py.test
 
     $ docker-compose run django pytest
-    
+
 
 #### Code
 
