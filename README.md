@@ -6,9 +6,6 @@ My solution to the Tuune programming assignment.
 ![image](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter%0A%20%20:target:%20https://github.com/pydanny/cookiecutter-django/%0A%20%20:alt:%20Built%20with%20Cookiecutter%20Django)
 
 
-Quickstart
---------------
-
 ### Running the app
 
 Ensure docker is installed and running and run:
