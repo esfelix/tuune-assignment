@@ -281,3 +281,4 @@ REST_FRAMEWORK = {
 CORS_URLS_REGEX = r"^/api/.*$"
 # Your stuff...
 # ------------------------------------------------------------------------------
+CORS_ORIGIN_ALLOW_ALL = True

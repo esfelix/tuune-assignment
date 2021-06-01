@@ -11,7 +11,7 @@ My solution to the Tuune programming assignment.
 Ensure docker is installed and running and run:
 
     $ docker-compose up
-    
+
 See the API docs for details on how to use the API: https://felixes.stoplight.io/docs/tuune-assignment
 
 
@@ -39,4 +39,3 @@ echo '{"income":52000,"show_breakdown":false}' |  \
 #### Running tests with py.test
 
     $ docker-compose run django pytest
-
