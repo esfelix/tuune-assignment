@@ -1,59 +1,45 @@
 Tuune Programming Assignment
 ============================
 
-Behold My Awesome Project!
+My solution to the Tuune programming assignment.
 
 ![image](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter%0A%20%20:target:%20https://github.com/pydanny/cookiecutter-django/%0A%20%20:alt:%20Built%20with%20Cookiecutter%20Django)
 
-![image](https://img.shields.io/badge/code%20style-black-000000.svg%0A%20%20:target:%20https://github.com/ambv/black%0A%20%20:alt:%20Black%20code%20style)
 
-License
-MIT
-
-Settings
---------
-
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
-
-Basic Commands
+Quickstart
 --------------
 
-### Setting Up Your Users
+### Running the app
 
--   To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
--   To create an **superuser account**, use this command:
+Ensure docker is installed and running and run:
 
-        $ python manage.py createsuperuser
+    $ docker-compose up
+    
+See the API docs for details on how to use the API: https://felixes.stoplight.io/docs/tuune-assignment
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
-### Type checks
+You can send requests directly from the API docs using the "Try it out" section for the [endpoint](https://felixes.stoplight.io/docs/tuune-assignment/tuune-assignment-api.yaml/paths/~1api~1v1~1income-tax~1calculate/post).
 
-Running type checks with mypy:
+Example requests:
 
-    $ mypy tuune_programming_assignment
+**curl**
 
-### Test coverage
+```
+curl --request POST \
+  --url http://localhost:8000/api/v1/income-tax/calculate \
+  --header 'Content-Type: application/json' \
+  --data '{"income":52000,"show_breakdown":true}'
+```
 
-To run the tests, check your test coverage, and generate an HTML coverage report:
+**httpie**
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+```
+echo '{"income":52000,"show_breakdown":false}' |  \
+  http POST http://localhost:8000/api/v1/income-tax/calculate \
+  Content-Type:application/json
+```
 
 #### Running tests with py.test
 
-    $ pytest
+    $ docker-compose run django pytest
 
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html).
-
-Deployment
-----------
-
-The following details how to deploy this application.
-
-### Docker
-
-See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
