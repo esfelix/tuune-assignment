@@ -29,4 +29,13 @@ Username: Michelleovzlt
 Token: dacfc280ce6451a56677ead2d5c2d077a398a79c
 ```
 
-(There is also a makefile which defines a number of shorcuts to interact with the app via the command line).
+Grab the token that is output above and use it to authenticated the user e.g.:
+
+```
+curl --location --request GET 'localhost:8000/api/products' \
+--header 'Authorization: Token 88df641b2a612b5e787c60b5f0d6d8b5e2217cac'
+```
+
+I've added a makefile which defines a number of shorcuts to interact with the app via the command line).
+
+**MORE DISCUSSION OF IMPLEMENTATION DETAILS TO BE ADDED HERE **
